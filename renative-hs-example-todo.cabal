@@ -1,5 +1,5 @@
 
-name:                myapp
+name:                renative-hs-example-todo
 version:             0.1.0.0
 license:             MIT
 license-file:        LICENSE
@@ -8,7 +8,7 @@ maintainer:          jyri-matti@lahteenmaki.net
 build-type:          Simple
 cabal-version:       >=1.10
 
-executable myapp
+executable renative-hs-example-todo
   main-is:             Main.hs
   build-depends:       base >=4.9 && <5.0,
                        text,
@@ -19,8 +19,7 @@ executable myapp
                        react-native-hs,
                        aeson,
                        containers,
-                       network-uri,
-                       semigroups
+                       network-uri
 
   if impl(ghcjs)
       build-depends: ghcjs-base
@@ -29,5 +28,5 @@ executable myapp
   hs-source-dirs:      src
   default-language:    Haskell2010
   ghc-options: -W
-  cpp-options: -DGHCJS_BROWSER
+--  cpp-options: -DGHCJS_BROWSER
 
