@@ -46,7 +46,7 @@ mainSection todoState@(TodoState todos filt) =
                                  , justifyContent Center_____
                                  , flexDirection Column
                                  , width 50
-                                 , height "100%"
+                                 , height 65
                                  ]] $
                         text [ style [ transform [RotateZ (Deg 90.0)]
                                      , color $ if allCompleted then "#4d4d4d" else "#d9d9d9"
@@ -132,7 +132,7 @@ footerStyles = [ color "#777"
                ]
 
 filterStyle = [ paddingHorizontal 7
-              , marginHorizontal 10
+              , marginHorizontal 3
               ]
 activeFilterStyle = [ borderWidth 1
                     , borderColor $ Rgba 175 47 47 0.2
@@ -171,9 +171,9 @@ mainSectionFooter = mkView "msfooter" $ \(TodoState todos filtering) ->
                         text [ style  [fontFamily "HelveticaNeue"] ] "Active"
                 touchableOpacity [ onPress $ dispatchTodo (SetFilter AcceptCompleted) ] $
                     view [styling AcceptCompleted] $
-                        text [ style  [fontFamily "HelveticaNeue"] ] "Completed"
+                        text [ style  [fontFamily "HelveticaNeue"] ] "Complete"
 
             touchableOpacity [ onPress $ dispatchTodo ClearCompletedTodos ] $
                 view [ style (if completed == 0 then [opacity 0] else []) ] $
                     text [ style (flexWrap Wrap : footerStyles) ]
-                        "Clear completed"
+                        "Clear"
