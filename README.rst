@@ -2,7 +2,7 @@
 React-Native in Haskell, TODO example
 =====================================
 
-Built on: https://github.org/jyrimatti/renative-hs
+Built on: https://github.com/jyrimatti/renative-hs
 
 
 .. image:: screenshot.png
