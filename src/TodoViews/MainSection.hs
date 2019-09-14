@@ -43,9 +43,10 @@ mainSection todoState@(TodoState todos filt) =
             view [ style [ flexDirection Row ]] $ do
                 touchableOpacity [ onPress $ dispatchTodo ToggleAllComplete ] $
                     view [ style [ alignItems Center______
-                                 , alignSelf Center____
+                                 , justifyContent Center_____
                                  , flexDirection Column
                                  , width 50
+                                 , height "100%"
                                  ]] $
                         text [ style [ transform [RotateZ (Deg 90.0)]
                                      , color $ if allCompleted then "#4d4d4d" else "#d9d9d9"

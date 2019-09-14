@@ -49,7 +49,6 @@ todoFooter = mkView "todoFooter" $ \() ->
             credit "React, "                "https://facebook.github.io/react/"
             credit "React-flux, "           "https://hackage.haskell.org/package/react-flux"
             credit "React-native, "         "https://facebook.github.io/react-native/"
-            credit "React-native-desktop, " "https://www.npmjs.com/package/react-native-desktop"
-            credit "React-native-web"       "https://github.com/necolas/react-native-web"
+            credit "Renative "              "https://renative.org"
   where credit txt link = touchableOpacity [ onPress $ dispatchTodo $ OpenLink link ] $
                               text [style  infoStyles] txt

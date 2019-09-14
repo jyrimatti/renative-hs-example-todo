@@ -44,7 +44,7 @@ todoTextInput styles args = flip (mkStatefulView "todo text input" (fromMaybe ""
     , blurOnSubmit True
     , style $ [ flex 1
               , height 45
-              , margin "8%"
+              , margin 10
               , marginLeft 0
               , fontFamily "HelveticaNeue"
               , fontSize 22
