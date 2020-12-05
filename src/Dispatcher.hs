@@ -1,9 +1,9 @@
 {-# LANGUAGE TypeApplications #-}
 module Dispatcher (dispatchTodo, handleTodo) where
 
-import           Prelude    ((.))
-import           React.Flux
-import           Store
+import Prelude    ((.))
+import React.Flux
+import Store
 
 dispatchTodo :: TodoAction -> [SomeStoreAction]
 dispatchTodo a = [action @TodoState a]

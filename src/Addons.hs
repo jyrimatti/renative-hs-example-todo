@@ -2,8 +2,8 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Addons where
 
-import           Prelude    (String)
-import           React.Flux (foreign_)
+import Prelude    (String)
+import React.Flux (foreign_)
 
 {-# ANN module ("HLint: ignore Use camelCase" :: String) #-}
 

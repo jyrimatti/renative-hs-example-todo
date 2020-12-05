@@ -3,21 +3,21 @@
 {-# LANGUAGE PartialTypeSignatures #-}
 module Components where
 
-import           Data.Maybe                         (fromMaybe)
-import           Data.Typeable                      (Typeable)
-import           Prelude                            (Bool (..), Eq, Int,
+import Data.Maybe                         (fromMaybe)
+import Data.Typeable                      (Typeable)
+import Dispatcher
+
+import Prelude                            (Bool (..), Eq, Int,
                                                      Maybe (..), String, const,
                                                      flip, mempty, not, null,
                                                      ($), (++), (.))
-
-import           React.Flux                         (SomeStoreAction)
-import           React.Flux.Rn.Components.TextInput
-import           React.Flux.Rn.Properties           (Styles)
-import           React.Flux.Rn.Views
+import React.Flux                         (SomeStoreAction)
+import React.Flux.Rn.Components.TextInput
+import React.Flux.Rn.Properties           (Styles)
 
 
-import           Dispatcher
-import           Store
+import React.Flux.Rn.Views
+import Store
 
 data TextInputArgs = TextInputArgs {
       tiaPlaceholder :: String

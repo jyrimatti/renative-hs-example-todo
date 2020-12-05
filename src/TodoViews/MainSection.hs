@@ -3,29 +3,28 @@
 
 module TodoViews.MainSection where
 
-import           Control.Monad                                     (forM_,
-                                                                    unless,
-                                                                    when)
-import           Prelude                                           (Maybe (..),
+import Components
+import Control.Monad                                     (forM_, unless, when)
+
+import Dispatcher
+
+import Prelude                                           (Maybe (..),
                                                                     all, filter,
                                                                     id, length,
                                                                     not, snd,
                                                                     ($), (++),
                                                                     (-), (.),
                                                                     (==))
-
-import           React.Flux.Rn.Views
-
-import           React.Flux                                        (elemShow,
-                                                                    elemString)
-import           React.Flux.Rn.Components.Text
-import           React.Flux.Rn.Components.TouchableOpacity
-import           React.Flux.Rn.Components.TouchableWithoutFeedback
-import           React.Flux.Rn.Components.View
-
-import           Components
-import           Dispatcher
-import           Store
+import React.Flux                                        (elemShow, elemString)
+import React.Flux.Rn.Components.Text as T
+import React.Flux.Rn.Components.TouchableOpacity as TO
+import React.Flux.Rn.Components.TouchableWithoutFeedback as TWF
+import React.Flux.Rn.Components.View as V
+import React.Flux.Rn.Types.AlignSelf as AS
+import React.Flux.Rn.Types.FontStyle as FS
+import React.Flux.Rn.Types.JustifyContent as JC
+import React.Flux.Rn.Views
+import Store
 
 mainSection todoState@(TodoState todos filt) =
     let doFilter AcceptAll       = id
@@ -41,12 +40,12 @@ mainSection todoState@(TodoState todos filt) =
                      , shadowOpacity 1
                      ]] $ do
             view [ style [ flexDirection Row ]] $ do
-                touchableOpacity [ onPress $ dispatchTodo ToggleAllComplete ] $
-                    view [ style [ alignItems Center______
-                                 , justifyContent Center_____
+                touchableOpacity [ TO.onPress $ dispatchTodo ToggleAllComplete ] $
+                    view [ style [ alignItems V.Center
+                                 , justifyContent JC.Center
                                  , flexDirection Column
-                                 , width 50
-                                 , height 65
+                                 , V.width 50
+                                 , V.height 65
                                  ]] $
                         text [ style [ transform [RotateZ (Deg 90.0)]
                                      , color $ if allCompleted then "#4d4d4d" else "#d9d9d9"
@@ -54,7 +53,7 @@ mainSection todoState@(TodoState todos filt) =
                                      , fontFamily "HelveticaNeue"
                                      ]]
                             ">"
-                todoTextInput [ fontStyle Italic
+                todoTextInput [ fontStyle FS.Italic
                               , fontSize 16
                               ] TextInputArgs { tiaPlaceholder = "What needs to be done?"
                                               , tiaSaveAction = SACreate
@@ -62,7 +61,7 @@ mainSection todoState@(TodoState todos filt) =
                                               , tiaValue = Nothing
                                               }
 
-            view [ style [ borderTopWidth 1
+            view [ style [ V.borderTopWidth 1
                          , borderTopColor "#e6e6e6"
                          ]] $
                 forM_ (doFilter filt todos) todoItem
@@ -74,21 +73,21 @@ todoItem = mkView "todo item" $ \(todoIdx, todo) ->
     in
         view [ style [ flexDirection Row ] ] $ do
             unless (todoIsEditing todo) $ do
-                touchableWithoutFeedback [ onPress $ dispatchTodo $ TodoSetComplete todoIdx (not isComplete) ] $
+                touchableWithoutFeedback [ TWF.onPress $ dispatchTodo $ TodoSetComplete todoIdx (not isComplete) ] $
                     -- I guess IOS does not support rendering inline SVG, so let's use border and unicode instead of a check-mark image.
-                    view [ style [ width 30
-                                 , height 30
-                                 , alignSelf Center____
+                    view [ style [ V.width 30
+                                 , V.height 30
+                                 , alignSelf AS.Center
                                  , marginLeft 8
                                  , paddingTop 4
-                                 , borderWidth 1
+                                 , V.borderWidth 1
                                  , borderRadius 30
                                  , borderColor "#bddad5"
-                                 , alignItems Center______
+                                 , alignItems V.Center
                                  ]] $
                         text [ style [ fontSize 20, color "#5dc2af", fontFamily "HelveticaNeue" ]] $
                             if isComplete then "\x2713" else ""
-                touchableOpacity [ onLongPress $ dispatchTodo $ TodoEdit todoIdx ] $
+                touchableOpacity [ TO.onLongPress $ dispatchTodo $ TodoEdit todoIdx ] $
                     view [ style [ padding 15
                                  , flex 1
                                  ]] $
@@ -97,18 +96,18 @@ todoItem = mkView "todo item" $ \(todoIdx, todo) ->
                                      , fontWeight W300
                                      , color $ Color $ if isComplete then "#d9d9d9" else "#4d4d4d"
                                      , fontFamily "HelveticaNeue"
-                                     , textDecorationLine $ if isComplete then LineThrough else None__________
+                                     , textDecorationLine $ if isComplete then LineThrough else T.None
                                      ]] $
                             elemString $ todoText todo
 
             when (todoIsEditing todo) $ do
-                touchableWithoutFeedback [ onPress $ dispatchTodo $ TodoDelete todoIdx ] $
-                    view [ style [ width 30
-                                 , height 30
-                                 , alignSelf Center____
+                touchableWithoutFeedback [ TWF.onPress $ dispatchTodo $ TodoDelete todoIdx ] $
+                    view [ style [ V.width 30
+                                 , V.height 30
+                                 , alignSelf AS.Center
                                  , marginLeft 8
                                  , paddingTop 4
-                                 , alignItems Center______
+                                 , alignItems V.Center
                                  ]] $
                         text [ style [ fontSize 20
                                      , fontFamily "HelveticaNeue"
@@ -134,7 +133,7 @@ footerStyles = [ color "#777"
 filterStyle = [ paddingHorizontal 7
               , marginHorizontal 3
               ]
-activeFilterStyle = [ borderWidth 1
+activeFilterStyle = [ V.borderWidth 1
                     , borderColor $ Rgba 175 47 47 0.2
                     , borderRadius 3
                     ]
@@ -146,11 +145,11 @@ mainSectionFooter = mkView "msfooter" $ \(TodoState todos filtering) ->
         styling f = style $ filterStyle ++ (if f == filtering then activeFilterStyle else [])
      in
         view [ style [ flexDirection Row
-                     , borderTopWidth 1
+                     , V.borderTopWidth 1
                      , borderTopColor "#e6e6e6"
                      , paddingVertical 10
                      , paddingHorizontal 15
-                     , justifyContent SpaceBetween_
+                     , justifyContent SpaceBetween
                      ]] $ do
             view [ style [ flexDirection Row ] ] $ do
                 text [ style  $ fontWeight Bold : footerStyles ] $
@@ -159,21 +158,21 @@ mainSectionFooter = mkView "msfooter" $ \(TodoState todos filtering) ->
                     if itemsLeft == 1 then " item left" else " items left"
 
             view [ style [ flexDirection Row
-                         , justifyContent Center_____
+                         , justifyContent JC.Center
                          , flexWrap Wrap
                          , flex 1
                          ]] $ do
-                touchableOpacity [ onPress $ dispatchTodo (SetFilter AcceptAll) ] $
+                touchableOpacity [ TO.onPress $ dispatchTodo (SetFilter AcceptAll) ] $
                     view [styling AcceptAll] $
                         text [ style  [fontFamily "HelveticaNeue"] ] "All"
-                touchableOpacity [ onPress $ dispatchTodo (SetFilter AcceptActive) ] $
+                touchableOpacity [ TO.onPress $ dispatchTodo (SetFilter AcceptActive) ] $
                     view [styling AcceptActive] $
                         text [ style  [fontFamily "HelveticaNeue"] ] "Active"
-                touchableOpacity [ onPress $ dispatchTodo (SetFilter AcceptCompleted) ] $
+                touchableOpacity [ TO.onPress $ dispatchTodo (SetFilter AcceptCompleted) ] $
                     view [styling AcceptCompleted] $
                         text [ style  [fontFamily "HelveticaNeue"] ] "Complete"
 
-            touchableOpacity [ onPress $ dispatchTodo ClearCompletedTodos ] $
+            touchableOpacity [ TO.onPress $ dispatchTodo ClearCompletedTodos ] $
                 view [ style (if completed == 0 then [opacity 0] else []) ] $
                     text [ style (flexWrap Wrap : footerStyles) ]
                         "Clear"
